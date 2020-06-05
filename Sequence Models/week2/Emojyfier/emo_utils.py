@@ -14,14 +14,14 @@ def read_glove_vecs(glove_file):
             curr_word = line[0]
             words.add(curr_word)
             word_to_vec_map[curr_word] = np.array(line[1:], dtype=np.float64)
-        
+
         i = 1
         words_to_index = {}
         index_to_words = {}
         for w in sorted(words):
             words_to_index[w] = i
             index_to_words[i] = w
-            i = i + 1
+            i += 1
     return words_to_index, index_to_words, word_to_vec_map
 
 def softmax(x):
@@ -47,8 +47,7 @@ def read_csv(filename = 'data/emojify_data.csv'):
     return X, Y
 
 def convert_to_one_hot(Y, C):
-    Y = np.eye(C)[Y.reshape(-1)]
-    return Y
+    return np.eye(C)[Y.reshape(-1)]
 
 
 emoji_dictionary = {"0": "\u2764\uFE0F",    # :heart: prints a black instead of red heart depending on the font

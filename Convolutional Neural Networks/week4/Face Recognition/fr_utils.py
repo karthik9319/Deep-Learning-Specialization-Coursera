@@ -50,10 +50,10 @@ def conv2d_bn(x,
     tensor = Conv2D(cv1_out, cv1_filter, strides=cv1_strides, data_format='channels_first', name=layer+'_conv'+num)(x)
     tensor = BatchNormalization(axis=1, epsilon=0.00001, name=layer+'_bn'+num)(tensor)
     tensor = Activation('relu')(tensor)
-    if padding == None:
+    if padding is None:
         return tensor
     tensor = ZeroPadding2D(padding=padding, data_format='channels_first')(tensor)
-    if cv2_out == None:
+    if cv2_out is None:
         return tensor
     tensor = Conv2D(cv2_out, cv2_filter, strides=cv2_strides, data_format='channels_first', name=layer+'_conv'+'2')(tensor)
     tensor = BatchNormalization(axis=1, epsilon=0.00001, name=layer+'_bn'+'2')(tensor)
@@ -193,5 +193,4 @@ def img_to_encoding(image_path, model):
     img = img1[...,::-1]
     img = np.around(np.transpose(img, (2,0,1))/255.0, decimals=12)
     x_train = np.array([img])
-    embedding = model.predict_on_batch(x_train)
-    return embedding
+    return model.predict_on_batch(x_train)

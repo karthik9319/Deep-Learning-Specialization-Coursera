@@ -27,7 +27,7 @@ def __is_scale_tone(chord, note):
     # Can change later to deriveAll() for flexibility. If so then use list
     # comprehension of form [x for a in b for x in a].
     scales = scaleType.derive(chord) # use deriveAll() later for flexibility
-    allPitches = list(set([pitch for pitch in scales.getPitches()]))
+    allPitches = list(set(scales.getPitches()))
     allNoteNames = [i.name for i in allPitches] # octaves don't matter
 
     # Get note name. Return true if in the list of note names.
@@ -41,11 +41,13 @@ def __is_approach_tone(chord, note):
     for chordPitch in chord.pitches:
         stepUp = chordPitch.transpose(1)
         stepDown = chordPitch.transpose(-1)
-        if (note.name == stepDown.name or 
-            note.name == stepDown.getEnharmonic().name or
-            note.name == stepUp.name or
-            note.name == stepUp.getEnharmonic().name):
-                return True
+        if note.name in [
+            stepDown.name,
+            stepDown.getEnharmonic().name,
+            stepUp.name,
+            stepUp.getEnharmonic().name,
+        ]:
+            return True
     return False
 
 ''' Helper function to determine if a note is a chord tone. '''
@@ -67,21 +69,19 @@ def __generate_scale_tone(lastChord):
     # Can change later to deriveAll() for flexibility. If so then use list
     # comprehension of form [x for a in b for x in a].
     scales = scaleType.derive(lastChord) # use deriveAll() later for flexibility
-    allPitches = list(set([pitch for pitch in scales.getPitches()]))
+    allPitches = list(set(scales.getPitches()))
     allNoteNames = [i.name for i in allPitches] # octaves don't matter
 
     # Return a note (no octave here) in a scale that matches the lastChord.
     sNoteName = random.choice(allNoteNames)
     lastChordSort = lastChord.sortAscending()
     sNoteOctave = random.choice([i.octave for i in lastChordSort.pitches])
-    sNote = note.Note(("%s%s" % (sNoteName, sNoteOctave)))
-    return sNote
+    return note.Note(("%s%s" % (sNoteName, sNoteOctave)))
 
 ''' Helper function to generate an approach tone. '''
 def __generate_approach_tone(lastChord):
     sNote = __generate_scale_tone(lastChord)
-    aNote = sNote.transpose(random.choice([1, -1]))
-    return aNote
+    return sNote.transpose(random.choice([1, -1]))
 
 ''' Helper function to generate a random tone. '''
 def __generate_arbitrary_tone(lastChord):

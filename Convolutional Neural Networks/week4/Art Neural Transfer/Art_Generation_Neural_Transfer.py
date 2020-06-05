@@ -90,9 +90,7 @@ def gram_matrix(A):
     GA -- Gram matrix of A, of shape (n_C, n_C)
     """
 
-    GA = tf.matmul(A, tf.transpose(A))
-    
-    return GA
+    return tf.matmul(A, tf.transpose(A))
 
 '''
 Style cost
@@ -131,9 +129,7 @@ def compute_layer_style_cost(a_S, a_G):
 
     # Computing the loss
     factor = (.5 / (n_H * n_W * n_C)) ** 2
-    J_style_layer = factor * tf.reduce_sum(np.power(GS - GG, 2))
-
-    return J_style_layer
+    return factor * tf.reduce_sum(np.power(GS - GG, 2))
 
 '''
 Style Weights

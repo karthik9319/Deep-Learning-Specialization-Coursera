@@ -12,7 +12,7 @@ from qa import *
 
 def data_processing(corpus, values_indices, m = 60, Tx = 30):
     # cut the corpus into semi-redundant sequences of Tx values
-    Tx = Tx 
+    Tx = Tx
     N_values = len(set(corpus))
     np.random.seed(0)
     X = np.zeros((m, Tx, N_values), dtype=np.bool)
@@ -22,11 +22,11 @@ def data_processing(corpus, values_indices, m = 60, Tx = 30):
         random_idx = np.random.choice(len(corpus) - Tx)
         corp_data = corpus[random_idx:(random_idx + Tx)]
         for j in range(Tx):
-            idx = values_indices[corp_data[j]]
             if j != 0:
+                idx = values_indices[corp_data[j]]
                 X[i, j, idx] = 1
                 Y[i, j-1, idx] = 1
-    
+
     Y = np.swapaxes(Y,0,1)
     Y = Y.tolist()
     return np.asarray(X), np.asarray(Y), N_values 
@@ -81,7 +81,7 @@ def sequence_to_matrix(sequence, values_indices):
     sequence_len = len(sequence)
     x = np.zeros((1, sequence_len, len(values_indices)))
     for t, value in enumerate(sequence):
-        if (not value in values_indices): print(value)
+        if value not in values_indices: print(value)
         x[0, t, values_indices[value]] = 1.
     return x
 
