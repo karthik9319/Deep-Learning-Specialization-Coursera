@@ -138,11 +138,9 @@ def backward_propagation_with_regularization(X, Y, cache, lambd):
     ### END CODE HERE ###
     db1 = 1. / m * np.sum(dZ1, axis=1, keepdims=True)
 
-    gradients = {"dZ3": dZ3, "dW3": dW3, "db3": db3, "dA2": dA2,
+    return {"dZ3": dZ3, "dW3": dW3, "db3": db3, "dA2": dA2,
                  "dZ2": dZ2, "dW2": dW2, "db2": db2, "dA1": dA1,
                  "dZ1": dZ1, "dW1": dW1, "db1": db1}
-
-    return gradients
 
 
 # GRADED FUNCTION: forward_propagation_with_dropout

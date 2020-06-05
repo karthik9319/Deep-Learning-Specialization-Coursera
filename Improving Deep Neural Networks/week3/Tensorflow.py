@@ -123,36 +123,23 @@ def model(X_train, Y_train, X_test, Y_test, learning_rate=0.0001,
 
     ops.reset_default_graph()  # to be able to rerun the model without overwriting tf variables
     tf.set_random_seed(1)  # to keep consistent results
-    seed = 3  # to keep consistent results
     (n_x, m) = X_train.shape  # (n_x: input size, m : number of examples in the train set)
     n_y = Y_train.shape[0]  # n_y : output size
-    costs = []  # To keep track of the cost
-
     # Create Placeholders of shape (n_x, n_y)
     ### START CODE HERE ### (1 line)
     X, Y = create_placeholders(n_x, n_y)
-    ### END CODE HERE ###
-
     # Initialize parameters
     ### START CODE HERE ### (1 line)
     parameters = initialize_parameters()
-    ### END CODE HERE ###
-
     # Forward propagation: Build the forward propagation in the tensorflow graph
     ### START CODE HERE ### (1 line)
     Z3 = forward_propagation(X, parameters)
-    ### END CODE HERE ###
-
     # Cost function: Add cost function to tensorflow graph
     ### START CODE HERE ### (1 line)
     cost = compute_cost(Z3, Y)
-    ### END CODE HERE ###
-
     # Backpropagation: Define the tensorflow optimizer. Use an AdamOptimizer.
     ### START CODE HERE ### (1 line)
     optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate).minimize(cost)
-    ### END CODE HERE ###
-
     # Initialize all the variables
     init = tf.global_variables_initializer()
 
@@ -162,12 +149,15 @@ def model(X_train, Y_train, X_test, Y_test, learning_rate=0.0001,
         # Run the initialization
         sess.run(init)
 
+        costs = []  # To keep track of the cost
+
+        seed = 3  # to keep consistent results
         # Do the training loop
         for epoch in range(num_epochs):
 
             epoch_cost = 0.  # Defines a cost related to an epoch
             num_minibatches = int(m / minibatch_size)  # number of minibatches of size minibatch_size in the train set
-            seed = seed + 1
+            seed += 1
             minibatches = random_mini_batches(X_train, Y_train, minibatch_size, seed)
 
             for minibatch in minibatches:

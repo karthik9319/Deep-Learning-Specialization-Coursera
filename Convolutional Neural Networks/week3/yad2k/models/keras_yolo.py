@@ -298,8 +298,7 @@ def yolo(inputs, anchors, num_classes):
     """Generate a complete YOLO_v2 localization model."""
     num_anchors = len(anchors)
     body = yolo_body(inputs, num_anchors, num_classes)
-    outputs = yolo_head(body.output, anchors, num_classes)
-    return outputs
+    return yolo_head(body.output, anchors, num_classes)
 
 
 def yolo_filter_boxes(box_confidence, boxes, box_class_probs, threshold=.6):

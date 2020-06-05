@@ -35,8 +35,7 @@ def scale_boxes(boxes, image_shape):
     width = image_shape[1]
     image_dims = K.stack([height, width, height, width])
     image_dims = K.reshape(image_dims, [1, 4])
-    boxes = boxes * image_dims
-    return boxes
+    return boxes * image_dims
 
 def preprocess_image(img_path, model_image_size):
     image_type = imghdr.what(img_path)

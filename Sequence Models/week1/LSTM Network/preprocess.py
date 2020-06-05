@@ -141,8 +141,8 @@ def get_musical_data(data_fn):
 def get_corpus_data(abstract_grammars):
     corpus = [x for sublist in abstract_grammars for x in sublist.split(' ')]
     values = set(corpus)
-    val_indices = dict((v, i) for i, v in enumerate(values))
-    indices_val = dict((i, v) for i, v in enumerate(values))
+    val_indices = {v: i for i, v in enumerate(values)}
+    indices_val = {i: v for i, v in enumerate(values)}
 
     return corpus, values, val_indices, indices_val
 
